@@ -279,11 +279,13 @@ async function sendMessageForInvite(invite, type) {
       updatedAt: sentAt,
     };
   } catch (error) {
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error("Sending failed:", error);
     return {
       ...invite,
       status: STATUS.SEND_FAILED,
-      sendError: error.message,
-      lastActivity: `${DELIVERY_PROVIDER === "sms" ? "SMS" : "Email"} failed: ${error.message}`,
+      sendError: errorMsg,
+      lastActivity: `${DELIVERY_PROVIDER === "sms" ? "SMS" : "Email"} failed: ${errorMsg || "Unknown error"}`,
       updatedAt: sentAt,
     };
   }
@@ -487,7 +489,13 @@ async function sendSmtp(email, options) {
 
     if (!options.secure) {
       await smtpCommand(upgradedSocket, "STARTTLS", 220);
-      upgradedSocket = tls.connect({ socket: upgradedSocket, servername: options.host });
+      
+      upgradedSocket = await new Promise((resolve, reject) => {
+        const tlsSocket = tls.connect({ socket: upgradedSocket, servername: options.host });
+        tlsSocket.once("secureConnect", () => resolve(tlsSocket));
+        tlsSocket.once("error", reject);
+      });
+      
       await expectSmtp(upgradedSocket, 220, true);
       await smtpCommand(upgradedSocket, `EHLO ${smtpHostName()}`, 250);
     }
