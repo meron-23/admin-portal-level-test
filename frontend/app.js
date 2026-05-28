@@ -17,7 +17,8 @@ const sendAllButton = document.querySelector("#sendAllButton");
 const syncButton = document.querySelector("#syncButton");
 const logoutButton = document.querySelector("#logoutButton");
 const modeBadge = document.querySelector("#modeBadge");
-const toast = document.querySelector("#toast");
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
+
 const navLinks = document.querySelectorAll("nav a");
 const dashboardView = document.querySelector("#dashboard-view");
 const recipientsView = document.querySelector("#recipients-view");
@@ -249,7 +250,7 @@ async function copyLink(invite) {
 }
 
 async function request(url, options = {}) {
-  const response = await fetch(url, {
+  const response = await fetch(`${BACKEND_URL}${url}`, {
     headers: { "content-type": "application/json" },
     ...options,
   });
