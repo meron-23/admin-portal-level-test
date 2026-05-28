@@ -237,7 +237,7 @@ function createInvite(body) {
     email,
     token,
     status: STATUS.DRAFT,
-    inviteUrl: `${PUBLIC_BASE_URL}/t/${token}`,
+    inviteUrl: `${process.env.RENDER_BASE_URL}/t/${token}`,
     sentAt: null,
     sendError: null,
     openedAt: null,

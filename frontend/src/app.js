@@ -26,7 +26,7 @@ const recipientsView = document.querySelector("#recipients-view");
 
 function handleRouting() {
   const hash = window.location.hash || "#dashboard";
-  
+
   navLinks.forEach(link => {
     if (link.getAttribute("href") === hash) {
       link.classList.add("active");
