@@ -1,6 +1,8 @@
 const form = document.querySelector("#loginForm");
 const errorText = document.querySelector("#loginError");
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   errorText.textContent = "";
@@ -9,9 +11,10 @@ form.addEventListener("submit", async (event) => {
 
   try {
     const formData = new FormData(form);
-    const response = await fetch("/api/login", {
+    const response = await fetch(`${BACKEND_URL}/api/login`, {
       method: "POST",
       headers: { "content-type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         email: formData.get("email"),
         password: formData.get("password"),

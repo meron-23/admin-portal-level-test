@@ -17,12 +17,8 @@ const sendAllButton = document.querySelector("#sendAllButton");
 const syncButton = document.querySelector("#syncButton");
 const logoutButton = document.querySelector("#logoutButton");
 const modeBadge = document.querySelector("#modeBadge");
-let BACKEND_URL = import.meta.env.VITE_BACKEND_URL?.trim();
-if (!BACKEND_URL) {
-  // fallback for debugging – replace with your Render URL
-  BACKEND_URL = "https://admin-portal-level-test.onrender.com";
-  console.warn('⚠️ VITE_BACKEND_URL not set – using fallback Render URL');
-}
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
+console.log('🔧 Backend URL:', BACKEND_URL);
 
 const navLinks = document.querySelectorAll("nav a");
 const dashboardView = document.querySelector("#dashboard-view");
