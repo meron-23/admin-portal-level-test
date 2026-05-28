@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>English Test Admin Portal</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">ET</div>
+          <div>
+            <strong>English Test</strong>
+            <span>Admin Portal</span>
+          </div>
+        </div>
+        <nav aria-label="Admin navigation">
+          <a href="#dashboard" class="active">Dashboard</a>
+          <a href="#recipients">Recipients</a>
+        </nav>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Invite-only assessment access</p>
+            <h1>Recipient tracking</h1>
+          </div>
+          <div class="topbar-actions">
+            <span class="mode dry" id="modeBadge">Email dry run</span>
+            <button class="ghost" id="syncButton" type="button">Sync completions</button>
+            <button class="ghost" id="logoutButton" type="button">Sign out</button>
+            <button class="primary" id="sendAllButton" type="button">Send pending links</button>
+          </div>
+        </header>
+
+        <div id="dashboard-view">
+          <section class="metrics" aria-label="Invitation metrics">
+            <article>
+            <span>Total invited</span>
+            <strong id="metricTotal">0</strong>
+          </article>
+          <article>
+            <span>Sent</span>
+            <strong id="metricSent">0</strong>
+          </article>
+          <article>
+            <span>Opened</span>
+            <strong id="metricOpened">0</strong>
+          </article>
+          <article>
+            <span>Completed</span>
+            <strong id="metricCompleted">0</strong>
+          </article>
+          <article>
+            <span>Needs reminder</span>
+            <strong id="metricReminder">0</strong>
+          </article>
+        </section>
+
+        <section class="panel" aria-labelledby="invite-title">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Create invite</p>
+              <h2 id="invite-title">Send a private test link</h2>
+            </div>
+          </div>
+          <form id="inviteForm" class="invite-form">
+            <label>
+              Full name
+              <input name="name" type="text" placeholder="Hana Bekele" required />
+            </label>
+            <label>
+              Phone number
+              <input name="phone" type="tel" placeholder="+251 911 000 000" />
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" placeholder="hana@example.com" required />
+            </label>
+            <button class="primary" type="submit">Create invite</button>
+          </form>
+        </section>
+        </div>
+
+        <section id="recipients-view" class="panel hidden" aria-labelledby="recipients-title">
+          <div class="panel-header recipients-header">
+            <div>
+              <p class="eyebrow">Live queue</p>
+              <h2 id="recipients-title">Recipients</h2>
+            </div>
+            <div class="tools">
+              <input id="searchInput" type="search" placeholder="Search recipients" />
+              <select id="statusFilter" aria-label="Filter by status">
+                <option value="all">All statuses</option>
+                <option value="draft">Draft</option>
+                <option value="sent">Sent</option>
+                <option value="opened">Opened</option>
+                <option value="completed">Completed</option>
+                <option value="send_failed">Send failed</option>
+                <option value="needs-reminder">Needs reminder</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Recipient</th>
+                  <th>Contact</th>
+                  <th>Status</th>
+                  <th>Private link</th>
+                  <th>Last activity</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="recipientRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+      </section>
+    </main>
+
+    <template id="emptyStateTemplate">
+      <tr>
+        <td colspan="6" class="empty">No recipients match the current filters.</td>
+      </tr>
+    </template>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "onboarding-english-admin-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend API server for English onboarding level test admin portal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "pg": "^8.20.0"
+  }
+}
