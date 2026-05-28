@@ -18,6 +18,7 @@ const syncButton = document.querySelector("#syncButton");
 const logoutButton = document.querySelector("#logoutButton");
 const modeBadge = document.querySelector("#modeBadge");
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
+console.log('🔧 Backend URL:', BACKEND_URL);
 
 const navLinks = document.querySelectorAll("nav a");
 const dashboardView = document.querySelector("#dashboard-view");
@@ -252,6 +253,7 @@ async function copyLink(invite) {
 async function request(url, options = {}) {
   const response = await fetch(`${BACKEND_URL}${url}`, {
     headers: { "content-type": "application/json" },
+    credentials: "include",
     ...options,
   });
   const payload = await response.json();

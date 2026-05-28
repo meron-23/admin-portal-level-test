@@ -49,6 +49,7 @@ const server = http.createServer(async (req, res) => {
       if (allowedOrigins.includes(origin) || allowedOrigins.includes("*") || !process.env.ALLOWED_ORIGINS) {
         res.setHeader("Access-Control-Allow-Origin", origin);
         res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Vary", "Origin");
       }
     }
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
@@ -166,7 +167,7 @@ async function handleLogin(req, res) {
   const session = createSessionToken();
   res.writeHead(200, {
     "content-type": "application/json; charset=utf-8",
-    "set-cookie": `admin_session=${session}; HttpOnly; SameSite=Lax; Path=/; Max-Age=28800`,
+    "set-cookie": `admin_session=${session}; HttpOnly; SameSite=None; Secure; Path=/; Max-Age=28800`,
   });
   res.end(JSON.stringify({ ok: true }));
 }
@@ -174,7 +175,7 @@ async function handleLogin(req, res) {
 function handleLogout(req, res) {
   res.writeHead(200, {
     "content-type": "application/json; charset=utf-8",
-    "set-cookie": "admin_session=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0",
+    "set-cookie": "admin_session=; HttpOnly; SameSite=None; Secure; Path=/; Max-Age=0",
   });
   res.end(JSON.stringify({ ok: true }));
 }
